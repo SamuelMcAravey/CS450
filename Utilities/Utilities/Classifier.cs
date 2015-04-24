@@ -6,34 +6,49 @@ using System.Threading.Tasks;
 
 namespace Utilities
 {
-    public abstract class Classifier<T>
+    public abstract class Classifier<TItem, TInput, TClass> where TItem : IClassified<TClass> where TInput : IClassifiable where TClass : IEquatable<TClass>
     {
-        protected abstract string Classify(T observation);
-        protected abstract void Train(T observation);
-        protected abstract string Predict(T observation);
+        protected abstract TClass Classify(TInput input);
 
-        public ClassifiedDataset<T> Classify(Dataset<T> dataset)
+        public void Train(IClassifiedDataset<TItem, TClass> trainingDataset)
         {
-            dataset.TrainingSet.ForEach(this.Train);
-            var classified = (from item in dataset.TestingSet
+            
+        }
+
+        public ClassifiedData<TInput, TClass> Classify(IEnumerable<TInput> dataset)
+        {
+            IReadOnlyList<TClass> classes = null;
+            var dataList = dataset as IList<TInput> ?? dataset.ToList();
+            if (typeof (TInput).GetInterface(typeof (IClassified<TClass>).Name) != null)
+            {
+                classes = dataList.Cast<IClassified<TClass>>().Select(c => c.Class).ToList();
+            }
+
+            var classified = (from item in dataList
                               select new
                                      {
                                          Item = item,
-                                         Predicted = this.Predict(item),
-                                         Classified = this.Classify(item)
+                                         EstimatedClass = this.Classify(item)
                                      }).ToList();
 
-            var accuracy = ((double) classified.Count(c => c.Classified == c.Predicted)) / (dataset.TestingSet.Count);
+            double? accuracy = null;
+            if (classes != null)
+            {
 
-            var classifiedData = classified.GroupBy(c => c.Classified)
+                accuracy = ((double)classified.Zip(classes, (classifiedItem, actualClass) => new
+                {
+                    EstimatedClass = classifiedItem.EstimatedClass,
+                    ActualClass = actualClass
+                }).Count(c => c.EstimatedClass.Equals(c.ActualClass))) / (dataList.Count);
+            }
+
+            var classifiedData = classified.GroupBy(c => c.EstimatedClass)
                                            .ToDictionary(grouping => grouping.Key,
-                                                         grouping => (IReadOnlyList<T>) grouping.Select(g => g.Item).ToList());
-            return new ClassifiedDataset<T>
+                                                         grouping => (IReadOnlyList<TInput>) grouping.Select(g => g.Item).ToList());
+            return new ClassifiedData<TInput, TClass>
                    {
                        Accuracy = accuracy,
-                       ClassifiedData = classifiedData,
-                       TestingSet = dataset.TestingSet,
-                       TrainingSet = dataset.TrainingSet
+                       Classified = classifiedData
                    };
         }
     }

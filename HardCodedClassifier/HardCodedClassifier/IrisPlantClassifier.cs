@@ -7,22 +7,13 @@ using Utilities;
 
 namespace HardCodedClassifier
 {
-    public sealed class IrisPlantClassifier : Classifier<IrisPlant>
+    public sealed class IrisPlantClassifier : Classifier<IrisPlant, IrisPlant, string>
     {
         private string plantClass = null;
-        protected override void Train(IrisPlant observation)
+        protected override string Classify(IrisPlant input)
         {
             if (string.IsNullOrWhiteSpace(this.plantClass))
-                this.plantClass = observation.Class;
-        }
-
-        protected override string Classify(IrisPlant observation)
-        {
-            return observation.Class;
-        }
-
-        protected override string Predict(IrisPlant observation)
-        {
+                this.plantClass = input.Class;
             return this.plantClass;
         }
     }

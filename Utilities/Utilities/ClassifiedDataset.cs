@@ -2,9 +2,9 @@
 
 namespace Utilities
 {
-    public sealed class ClassifiedDataset<T> : Dataset<T>
+    public sealed class ClassifiedData<T, TClass>
     {
-        public double Accuracy { get; set; }
-        public IDictionary<string, IReadOnlyList<T>> ClassifiedData { get; set; }
+        public double? Accuracy { get; set; }
+        public IDictionary<TClass, IReadOnlyList<T>> Classified { get; set; }
     }
 }

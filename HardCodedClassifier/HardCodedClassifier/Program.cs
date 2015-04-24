@@ -22,11 +22,21 @@ namespace HardCodedClassifier
                 plants = csv.GetRecords<IrisPlant>().ToList();
             }
 
-            var dataset = plants.CreateDataset(trainingSetPercentage: 0.7);
-            var classifier = new IrisPlantClassifier();
-            var classifiedDataset = classifier.Classify(dataset);
+            const int testCount = 100;
+            double totalAccuracy = 0;
+            for (int i = 0; i < testCount; i++)
+            {
+                var dataset = plants.CreateTestDataset<IrisPlant, string>(trainingSetPercentage: 0.7);
+                var classifier = new IrisPlantClassifier();
+                classifier.Train(dataset.TrainingSet);
+                var classifiedDataset = classifier.Classify(dataset.TestingSet);
 
-            Console.WriteLine("Classified with {0}% accuracy.", classifiedDataset.Accuracy);
+                Console.WriteLine("Classified with {0}% accuracy.", classifiedDataset.Accuracy);
+                totalAccuracy += classifiedDataset.Accuracy ?? 0;
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Classified with an average accuracy of: {0}%.", totalAccuracy/testCount);
             Console.ReadLine();
         }
     }
