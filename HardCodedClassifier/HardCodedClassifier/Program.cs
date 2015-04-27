@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CsvHelper;
 using Utilities;
+using IrisDataset;
 
 namespace HardCodedClassifier
 {
@@ -13,14 +14,7 @@ namespace HardCodedClassifier
     { 
         static void Main(string[] args)
         {
-            List<IrisPlant> plants;
-            using (var reader = File.OpenText("iris.data"))
-            {
-                var csv = new CsvReader(reader); 
-                csv.Configuration.RegisterClassMap<IrisPlantMap>();
-                csv.Configuration.HasHeaderRecord = false;
-                plants = csv.GetRecords<IrisPlant>().ToList();
-            }
+			IReadOnlyList<IrisPlant> plants = IrisPlant.ReadPlants();
 
             const int testCount = 100;
             double totalAccuracy = 0;
@@ -31,12 +25,12 @@ namespace HardCodedClassifier
                 classifier.Train(dataset.TrainingSet);
                 var classifiedDataset = classifier.Classify(dataset.TestingSet);
 
-                Console.WriteLine("Classified with {0}% accuracy.", classifiedDataset.Accuracy);
+                Console.WriteLine("Classified with {0}% accuracy.", classifiedDataset.Accuracy * 100);
                 totalAccuracy += classifiedDataset.Accuracy ?? 0;
             }
 
             Console.WriteLine();
-            Console.WriteLine("Classified with an average accuracy of: {0}%.", totalAccuracy/testCount);
+            Console.WriteLine("Classified with an average accuracy of: {0}%.", totalAccuracy * 100 / testCount);
             Console.ReadLine();
         }
     }

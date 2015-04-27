@@ -1,14 +1,29 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Utilities;
 
-namespace HardCodedClassifier
+namespace IrisDataset
 {
     public sealed class IrisPlant : IClassifiable, IClassified<string>
     {
+		public static IReadOnlyList<IrisPlant> ReadPlants()
+		{
+			List<IrisPlant> plants;
+			using (var reader = File.OpenText("iris.data"))
+			{
+				var csv = new CsvReader(reader);
+				csv.Configuration.RegisterClassMap<IrisPlantMap>();
+				csv.Configuration.HasHeaderRecord = false;
+				plants = csv.GetRecords<IrisPlant>().ToList();
+			}
+			return plants;
+		}
+
         public double SepalLength { get; set; }
         public double SepalWidth { get; set; }
         public double PetalLength { get; set; }

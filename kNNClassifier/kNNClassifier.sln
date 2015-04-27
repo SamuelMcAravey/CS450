@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.22609.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kNNClassifier", "kNNClassifier\kNNClassifier.csproj", "{00E21D6B-8487-44C7-8A04-4DF510F5F60D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "..\Utilities\Utilities\Utilities.csproj", "{20E0ED69-875A-4DEB-924E-516D7D9CE4B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IrisDataset", "..\Utilities\IrisDataset\IrisDataset.csproj", "{8BF00D5E-B931-4789-8767-7BFDD751F576}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{20E0ED69-875A-4DEB-924E-516D7D9CE4B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20E0ED69-875A-4DEB-924E-516D7D9CE4B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20E0ED69-875A-4DEB-924E-516D7D9CE4B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BF00D5E-B931-4789-8767-7BFDD751F576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BF00D5E-B931-4789-8767-7BFDD751F576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BF00D5E-B931-4789-8767-7BFDD751F576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BF00D5E-B931-4789-8767-7BFDD751F576}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CsvHelper.Configuration;
 
-namespace HardCodedClassifier
+namespace IrisDataset
 {
     internal sealed class IrisPlantMap : CsvClassMap<IrisPlant>
     {

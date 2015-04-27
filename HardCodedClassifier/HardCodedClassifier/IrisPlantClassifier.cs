@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IrisDataset;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,12 @@ namespace HardCodedClassifier
     public sealed class IrisPlantClassifier : Classifier<IrisPlant, IrisPlant, string>
     {
         private string plantClass = null;
-        protected override string Classify(IrisPlant input)
+
+		public override void Train(IClassifiedDataset<IrisPlant, string> trainingDataset)
+		{
+		}
+
+		protected override string Classify(IrisPlant input)
         {
             if (string.IsNullOrWhiteSpace(this.plantClass))
                 this.plantClass = input.Class;

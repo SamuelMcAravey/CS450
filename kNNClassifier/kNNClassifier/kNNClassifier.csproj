@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="KnnClassifier.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -48,6 +49,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Utilities\IrisDataset\IrisDataset.csproj">
+      <Project>{8bf00d5e-b931-4789-8767-7bfdd751f576}</Project>
+      <Name>IrisDataset</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Utilities\Utilities\Utilities.csproj">
       <Project>{20e0ed69-875a-4deb-924e-516d7d9ce4b0}</Project>
       <Name>Utilities</Name>

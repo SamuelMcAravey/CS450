@@ -6,14 +6,11 @@ using System.Threading.Tasks;
 
 namespace Utilities
 {
-    public abstract class Classifier<TItem, TInput, TClass> where TItem : IClassified<TClass> where TInput : IClassifiable where TClass : IEquatable<TClass>
+    public abstract class Classifier<TClassified, TInput, TClass> where TClassified : IClassified<TClass> where TInput : IClassifiable where TClass : IEquatable<TClass>
     {
         protected abstract TClass Classify(TInput input);
 
-        public void Train(IClassifiedDataset<TItem, TClass> trainingDataset)
-        {
-            
-        }
+		public abstract void Train(IClassifiedDataset<TClassified, TClass> trainingDataset);
 
         public ClassifiedData<TInput, TClass> Classify(IEnumerable<TInput> dataset)
         {
