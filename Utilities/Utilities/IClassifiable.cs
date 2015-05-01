@@ -9,5 +9,6 @@ namespace Utilities
     public interface IClassifiable
     {
         IEnumerable<Tuple<string, object>> Values { get; }
+        IReadOnlyDictionary<string, object> ValueDictionary { get; }
     }
 }

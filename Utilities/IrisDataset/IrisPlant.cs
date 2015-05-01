@@ -40,5 +40,18 @@ namespace IrisDataset
                 yield return Tuple.Create("PetalWidth", (object)this.PetalWidth);
             }
         }
+
+        private IReadOnlyDictionary<string, object> valueDictionary;
+        public IReadOnlyDictionary<string, object> ValueDictionary
+        {
+            get
+            {
+                if (valueDictionary == null)
+                {
+                    this.valueDictionary = this.Values.ToDictionary(val => val.Item1, val => val.Item2);
+                }
+                return valueDictionary;
+            }
+        }
     }
 }

@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassificationTester.cs" />
     <Compile Include="Classifier.cs" />
     <Compile Include="ClassifiedDataset.cs" />
+    <Compile Include="ObjectExtensions.cs" />
     <Compile Include="TestDataset.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="IClassifiable.cs" />

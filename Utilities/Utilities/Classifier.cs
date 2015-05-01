@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Utilities
 {
-    public abstract class Classifier<TClassified, TInput, TClass> where TClassified : IClassified<TClass> where TInput : IClassifiable where TClass : IEquatable<TClass>
+    public abstract class Classifier<TClassified, TInput, TClass> where TClassified : IClassified<TClass> where TInput : IClassifiable
     {
         protected abstract TClass Classify(TInput input);
 
@@ -36,7 +36,7 @@ namespace Utilities
                 {
                     EstimatedClass = classifiedItem.EstimatedClass,
                     ActualClass = actualClass
-                }).Count(c => c.EstimatedClass.Equals(c.ActualClass))) / (dataList.Count);
+                }).Count(c => CompareClass(c.EstimatedClass, c.ActualClass) == 0)) / (dataList.Count);
             }
 
             var classifiedData = classified.GroupBy(c => c.EstimatedClass)
@@ -47,6 +47,11 @@ namespace Utilities
                        Accuracy = accuracy,
                        Classified = classifiedData
                    };
+        }
+
+        private static int CompareClass(TClass first, TClass second)
+        {
+            return Comparer<TClass>.Default.Compare(first, second);
         }
     }
 }
