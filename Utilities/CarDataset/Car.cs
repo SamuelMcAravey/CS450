@@ -24,6 +24,33 @@ namespace CarDataset
 			return plants;
 		}
 
+        public void SetValue(string property, object value)
+        {
+            switch (property)
+            {
+                case "Buying":
+                    this.Buying = (double)value;
+                    break;
+                case "Maintenance":
+                    this.Maintenance = (double)value;
+                    break;
+                case "Doors":
+                    this.Doors = (double)value;
+                    break;
+                case "Persons":
+                    this.Persons = (double)value;
+                    break;
+                case "BootSize":
+                    this.BootSize = (double)value;
+                    break;
+                case "Safety":
+                    this.Safety = (double)value;
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public double Buying { get; set; }
         public double Maintenance { get; set; }
         public double Doors { get; set; }

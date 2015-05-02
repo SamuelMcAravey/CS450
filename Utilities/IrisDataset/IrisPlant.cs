@@ -24,6 +24,27 @@ namespace IrisDataset
 			return plants;
 		}
 
+        public void SetValue(string property, object value)
+        {
+            switch (property)
+            {
+                case "SepalLength":
+                    this.SepalLength = (double)value;
+                    break;
+                case "SepalWidth":
+                    this.SepalWidth = (double)value;
+                    break;
+                case "PetalLength":
+                    this.PetalLength = (double)value;
+                    break;
+                case "PetalWidth":
+                    this.PetalWidth = (double)value;
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public double SepalLength { get; set; }
         public double SepalWidth { get; set; }
         public double PetalLength { get; set; }

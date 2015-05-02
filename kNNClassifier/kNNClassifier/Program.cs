@@ -14,6 +14,7 @@ namespace kNNClassifier
     {
         static void Main(string[] args)
         {
+            TestIrisPlantDataset();
             TestCarDataset();
             Console.ReadLine();
         }
@@ -22,14 +23,14 @@ namespace kNNClassifier
         {
             var cars = Car.ReadCars();
             var tester = new ClassificationTester<Car, CarClass>();
-            tester.Test(cars, new GenericKnnClassifier<Car, CarClass>(3));
+            tester.Test(cars, new GenericKnnClassifier<Car, CarClass>(5, new ManhattanDistanceCalculator<Car>()), testCount: 5); // Takes too long
         }
 
         private static void TestIrisPlantDataset()
         {
             var plants = IrisPlant.ReadPlants();
             var tester = new ClassificationTester<IrisPlant, string>();
-            tester.Test(plants, new KnnClassifier(3));
+            tester.Test(plants, new GenericKnnClassifier<IrisPlant, string>(5, new ManhattanDistanceCalculator<IrisPlant>()));
         }
     }
 }

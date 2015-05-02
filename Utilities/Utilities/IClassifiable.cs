@@ -10,5 +10,6 @@ namespace Utilities
     {
         IEnumerable<Tuple<string, object>> Values { get; }
         IReadOnlyDictionary<string, object> ValueDictionary { get; }
+        void SetValue(string property, object value);
     }
 }

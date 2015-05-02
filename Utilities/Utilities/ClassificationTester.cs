@@ -22,7 +22,10 @@ namespace Utilities
             }
 
             Console.WriteLine();
+            Console.WriteLine("======================================");
             Console.WriteLine("Classified with an average accuracy of: {0}%.", totalAccuracy * 100 / testCount);
+            Console.WriteLine("======================================");
+            Console.WriteLine();
         }
     }
 }
