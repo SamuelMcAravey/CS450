@@ -29,7 +29,7 @@ namespace DecisionTreeClassifier
         /// </summary>
         public static IEnumerable<ITree<T>> Descendants<T, K>(this ITree<T> adapter)
         {
-            return adapter.Descendants().Where(i => i.Item is K);
+            return adapter.Descendants().Where(i => i.Data is K);
         }
 
         /// <summary>

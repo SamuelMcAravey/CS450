@@ -13,13 +13,14 @@ namespace DecisionTreeClassifier
             return new Tree<T>(data, branches);
         }
     }
+
     public class Tree<T> : ITree<T> // use null for Leaf
     {
-        public T Data { get; private set; }
+        private T data;
         public IList<Tree<T>> Branches { get; private set; }
         public Tree(T data, params Tree<T>[] branches)
         {
-            this.Data = data;
+            this.data = data;
             this.Parent = null;
             if (branches != null)
             {
@@ -42,9 +43,14 @@ namespace DecisionTreeClassifier
 
         public ITree<T> Parent { get; private set; }
 
-        public T Item
+        public T Data
         {
-            get { return this.Data; }
+            get { return this.data; }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("[Tree: Branches={0}, Data={1}]", Branches.Count, Data);
         }
     }
 }

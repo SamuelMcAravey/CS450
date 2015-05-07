@@ -27,6 +27,6 @@ namespace DecisionTreeClassifier
         /// <summary>
         /// The item being adapted.
         /// </summary>
-        T Item { get; }
+        T Data { get; }
     }
 }

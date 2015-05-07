@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,15 +53,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Utilities\CarDataset\CarDataset.csproj">
-      <Project>{1f1f3c3b-5afe-48b3-88dc-56a585f51ea0}</Project>
+      <Project>{1F1F3C3B-5AFE-48B3-88DC-56A585F51EA0}</Project>
       <Name>CarDataset</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Utilities\IrisDataset\IrisDataset.csproj">
-      <Project>{8bf00d5e-b931-4789-8767-7bfdd751f576}</Project>
+      <Project>{8BF00D5E-B931-4789-8767-7BFDD751F576}</Project>
       <Name>IrisDataset</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Utilities\Utilities\Utilities.csproj">
-      <Project>{20e0ed69-875a-4deb-924e-516d7d9ce4b0}</Project>
+      <Project>{20E0ED69-875A-4DEB-924E-516D7D9CE4B0}</Project>
       <Name>Utilities</Name>
     </ProjectReference>
   </ItemGroup>
