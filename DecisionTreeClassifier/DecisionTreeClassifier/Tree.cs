@@ -1,56 +1,98 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DecisionTreeClassifier
 {
-    public static class Tree
+    public class TreeNode : IEnumerable<TreeNode>
     {
-        public static Tree<T> Create<T>(T data, params Tree<T>[] branches)
-        {
-            return new Tree<T>(data, branches);
-        }
-    }
+        private readonly Dictionary<object, TreeNode> _children =
+                                            new Dictionary<object, TreeNode>();
 
-    public class Tree<T> : ITree<T> // use null for Leaf
-    {
-        private T data;
-        public IList<Tree<T>> Branches { get; private set; }
-        public Tree(T data, params Tree<T>[] branches)
+        public readonly object Attribute;
+        public TreeNode Parent { get; private set; }
+
+        public IEnumerable<object> BranchNames => this._children.Keys;
+
+        public TreeNode(object attribute)
         {
-            this.data = data;
-            this.Parent = null;
-            if (branches != null)
-            {
-                this.Branches = branches.Select(b =>
-                                                {
-                                                    b.Parent = this;
-                                                    return b;
-                                                }).ToList();
-            }
-            else
-            {
-                this.Branches = new List<Tree<T>>();
-            }
+            this.Attribute = attribute;
         }
 
-        public IEnumerable<ITree<T>> Children()
+        public TreeNode GetChild(object branchName)
         {
-            return this.Branches;
+            return this._children[branchName];
         }
 
-        public ITree<T> Parent { get; private set; }
-
-        public T Data
+        public void Add(TreeNode item, object branchName)
         {
-            get { return this.data; }
+            item.Parent?._children.Remove(item.Attribute);
+            item.Parent = this;
+            this._children.Add(branchName, item);
         }
+
+        public IEnumerator<TreeNode> GetEnumerator()
+        {
+            return this._children.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+
+        public int Count => this._children.Count;
 
         public override string ToString()
         {
-            return string.Format("[Tree: Branches={0}, Data={1}]", Branches.Count, Data);
+            return this.PrintPretty();
+        }
+
+        public static string BuildString(TreeNode tree)
+        {
+            var sb = new StringBuilder();
+
+            BuildString(sb, tree, 0);
+
+            return sb.ToString();
+        }
+
+        private static void BuildString(StringBuilder sb, TreeNode node, int depth)
+        {
+            var attribute = node.Attribute.ToString();
+            sb.AppendLine(attribute.PadLeft(attribute.Length + depth, '-'));
+
+            foreach (var child in node)
+            {
+                BuildString(sb, child, depth + 1);
+            }
+        }
+
+        public string PrintPretty(string indent = "", bool last = true)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(indent);
+            if (last)
+            {
+                sb.Append("└╴");
+                indent += "  ";
+            }
+            else
+            {
+                sb.Append("├╴");
+                indent += "│ ";
+            }
+            sb.AppendLine(this.Attribute.ToString());
+
+            var children = this._children.Values.ToList();
+            for (int i = 0; i < children.Count; i++)
+                sb.Append(children[i].PrintPretty(indent, i == children.Count - 1));
+
+            return sb.ToString();
         }
     }
 }

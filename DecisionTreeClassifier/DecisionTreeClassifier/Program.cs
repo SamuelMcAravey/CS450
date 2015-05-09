@@ -13,10 +13,9 @@ namespace DecisionTreeClassifier
     {
         static void Main(string[] args)
         {
-            var r = Tree.Create("Foo",
-                Tree.Create("Bar"),
-                Tree.Create("Loo"));
-            TestIrisPlantDataset();
+
+
+            //TestIrisPlantDataset();
             TestCarDataset();
             Console.ReadLine();
         }
@@ -25,7 +24,7 @@ namespace DecisionTreeClassifier
         {
             var cars = Car.ReadCars();
             var tester = new ClassificationTester<Car, CarClass>();
-            //tester.Test(cars, new ID3DecisionTreeClassifier(5, new ManhattanDistanceCalculator<Car>()), testCount: 5); // Takes too long
+            tester.Test(cars, new ID3DecisionTreeClassifier<Car, CarClass>(), testCount: 1000);
         }
 
         private static void TestIrisPlantDataset()
