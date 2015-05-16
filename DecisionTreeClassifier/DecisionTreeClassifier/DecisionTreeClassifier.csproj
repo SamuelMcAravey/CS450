@@ -59,6 +59,10 @@
       <Project>{8BF00D5E-B931-4789-8767-7BFDD751F576}</Project>
       <Name>IrisDataset</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Utilities\LensesDataset\LensesDataset.csproj">
+      <Project>{0D8CFEC2-C38D-4C7B-A4D2-183A51F62C0F}</Project>
+      <Name>LensesDataset</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Utilities\Utilities\Utilities.csproj">
       <Project>{20E0ED69-875A-4DEB-924E-516D7D9CE4B0}</Project>
       <Name>Utilities</Name>

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CarDataset;
 using IrisDataset;
+using LensesDataset;
 using Utilities;
 
 namespace DecisionTreeClassifier
@@ -13,10 +14,9 @@ namespace DecisionTreeClassifier
     {
         static void Main(string[] args)
         {
-
-
             //TestIrisPlantDataset();
-            TestCarDataset();
+            //TestCarDataset();
+            TestLensesDataset();
             Console.ReadLine();
         }
 
@@ -24,14 +24,21 @@ namespace DecisionTreeClassifier
         {
             var cars = Car.ReadCars();
             var tester = new ClassificationTester<Car, CarClass>();
-            tester.Test(cars, new ID3DecisionTreeClassifier<Car, CarClass>(), testCount: 1000);
+            tester.Test(cars, new ID3DecisionTreeClassifier<Car, CarClass>());
         }
 
         private static void TestIrisPlantDataset()
         {
-            var plants = IrisPlant.ReadPlants();
-            var tester = new ClassificationTester<IrisPlant, string>();
-            //tester.Test(plants, new DecisionTreeClassifier(5, new ManhattanDistanceCalculator<IrisPlant>()));
+            var plants = IrisPlantDiscrete.ReadPlants();
+            var tester = new ClassificationTester<IrisPlantDiscrete, string>();
+            tester.Test(plants, new ID3DecisionTreeClassifier<IrisPlantDiscrete, string>());
+        }
+
+        private static void TestLensesDataset()
+        {
+            var patients = Patient.ReadPatients();
+            var tester = new ClassificationTester<Patient, PatientLenseClass>();
+            tester.Test(patients, new ID3DecisionTreeClassifier<Patient, PatientLenseClass>());
         }
     }
 }

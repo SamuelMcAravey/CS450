@@ -72,7 +72,7 @@ namespace DecisionTreeClassifier
             }
         }
 
-        public string PrintPretty(string indent = "", bool last = true)
+        public string PrintPretty(string indent = "", bool last = true, string branchName = "")
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(indent);
@@ -86,11 +86,18 @@ namespace DecisionTreeClassifier
                 sb.Append("├╴");
                 indent += "│ ";
             }
+
+            if (!string.IsNullOrWhiteSpace(branchName))
+                sb.Append(branchName + ": ");
+
             sb.AppendLine(this.Attribute.ToString());
 
             var children = this._children.Values.ToList();
+            var branchNames = this.BranchNames.ToList();
             for (int i = 0; i < children.Count; i++)
-                sb.Append(children[i].PrintPretty(indent, i == children.Count - 1));
+            {
+                sb.Append(children[i].PrintPretty(indent, i == children.Count - 1, branchNames[i].ToString()));
+            }
 
             return sb.ToString();
         }

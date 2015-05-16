@@ -29,34 +29,34 @@ namespace CarDataset
             switch (property)
             {
                 case "Buying":
-                    this.Buying = (double)value;
+                    this.Buying = (string)value;
                     break;
                 case "Maintenance":
-                    this.Maintenance = (double)value;
+                    this.Maintenance = (string)value;
                     break;
                 case "Doors":
-                    this.Doors = (double)value;
+                    this.Doors = (string)value;
                     break;
                 case "Persons":
-                    this.Persons = (double)value;
+                    this.Persons = (string)value;
                     break;
                 case "BootSize":
-                    this.BootSize = (double)value;
+                    this.BootSize = (string)value;
                     break;
                 case "Safety":
-                    this.Safety = (double)value;
+                    this.Safety = (string)value;
                     break;
                 default:
                     break;
             }
         }
 
-        public double Buying { get; set; }
-        public double Maintenance { get; set; }
-        public double Doors { get; set; }
-        public double Persons { get; set; }
-        public double BootSize { get; set; }
-        public double Safety { get; set; }
+        public string Buying { get; set; }
+        public string Maintenance { get; set; }
+        public string Doors { get; set; }
+        public string Persons { get; set; }
+        public string BootSize { get; set; }
+        public string Safety { get; set; }
         public CarClass Class { get; set; }
 
         private IEnumerable<Tuple<string, object>> values = null;

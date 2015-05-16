@@ -32,7 +32,7 @@ namespace DecisionTreeClassifier
         {
             this.attributeValues = trainingDataset.SelectMany(item => item.ValueDictionary).GroupBy(pair => pair.Key).Select(pairs => Tuple.Create(pairs.Key, pairs.Select(pair => pair.Value).Distinct())).ToDictionary(tuple => tuple.Item1, tuple => tuple.Item2);
             this.tree = this.BuildTree(trainingDataset.ToList(), trainingDataset.First().ValueDictionary.Keys.ToList());
-            //Debug.WriteLine(this.tree);
+            Console.WriteLine(this.tree);
         }
 
         private TreeNode BuildTree(IReadOnlyList<TItem> set, IReadOnlyCollection<string> availableAttributes)
