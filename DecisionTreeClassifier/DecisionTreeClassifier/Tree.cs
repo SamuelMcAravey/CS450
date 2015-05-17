@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using MathNet.Numerics.Random;
 
 namespace DecisionTreeClassifier
 {
@@ -18,14 +19,21 @@ namespace DecisionTreeClassifier
 
         public IEnumerable<object> BranchNames => this._children.Keys;
 
+        public IReadOnlyDictionary<object, TreeNode> Children => this._children;
+
         public TreeNode(object attribute)
         {
             this.Attribute = attribute;
         }
 
+
+        readonly Random random = new SystemRandomSource();
         public TreeNode GetChild(object branchName)
         {
-            return this._children[branchName];
+            if (this._children.ContainsKey(branchName))
+                return this._children[branchName];
+
+            return this.Children.Values.ElementAt(this.random.Next(0, this.Children.Count));
         }
 
         public void Add(TreeNode item, object branchName)
@@ -72,19 +80,23 @@ namespace DecisionTreeClassifier
             }
         }
 
-        public string PrintPretty(string indent = "", bool last = true, string branchName = "")
+        public string PrintPretty(string indent = "", bool? last = null, string branchName = "")
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(indent);
-            if (last)
+            if (!last.HasValue)
             {
-                sb.Append("└╴");
-                indent += "  ";
+                // Do nothing
+            }
+            else if (last.Value)
+            {
+                sb.Append("└");//╴
+                indent += " ";
             }
             else
             {
-                sb.Append("├╴");
-                indent += "│ ";
+                sb.Append("├");
+                indent += "│";
             }
 
             if (!string.IsNullOrWhiteSpace(branchName))

@@ -1,19 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{601709A8-92EF-49FA-8400-F79D7F1D2223}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{960AC63F-4359-4304-AB47-E69D17ED7DA4}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DecisionTreeClassifier</RootNamespace>
-    <AssemblyName>DecisionTreeClassifier</AssemblyName>
+    <RootNamespace>ChessDataset</RootNamespace>
+    <AssemblyName>ChessDataset</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,54 +30,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MathNet.Numerics, Version=3.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MathNet.Numerics.3.7.0\lib\net40\MathNet.Numerics.dll</HintPath>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\..\DecisionTreeClassifier\packages\CsvHelper.2.13.0.0\lib\net40-client\CsvHelper.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DecisionTreeClassifier.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tree.cs" />
-    <Compile Include="TreeExtensions.cs" />
+    <Compile Include="ChessEntry.cs" />
+    <Compile Include="ChessEntryMap.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <Content Include="..\..\Datasets\chess.data">
+      <Link>chess.data</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Utilities\CarDataset\CarDataset.csproj">
-      <Project>{1F1F3C3B-5AFE-48B3-88DC-56A585F51EA0}</Project>
-      <Name>CarDataset</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Utilities\ChessDataset\ChessDataset.csproj">
-      <Project>{960ac63f-4359-4304-ab47-e69d17ed7da4}</Project>
-      <Name>ChessDataset</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Utilities\IrisDataset\IrisDataset.csproj">
-      <Project>{8BF00D5E-B931-4789-8767-7BFDD751F576}</Project>
-      <Name>IrisDataset</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Utilities\LensesDataset\LensesDataset.csproj">
-      <Project>{0D8CFEC2-C38D-4C7B-A4D2-183A51F62C0F}</Project>
-      <Name>LensesDataset</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Utilities\Utilities\Utilities.csproj">
+    <ProjectReference Include="..\Utilities\Utilities.csproj">
       <Project>{20E0ED69-875A-4DEB-924E-516D7D9CE4B0}</Project>
       <Name>Utilities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Utilities\VotingDataset\VotingDataset.csproj">
-      <Project>{AF2F4F29-E13A-4D9C-A02D-13E1A84A1E7A}</Project>
-      <Name>VotingDataset</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

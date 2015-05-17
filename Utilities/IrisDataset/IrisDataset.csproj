@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="IrisPlantDiscrete.cs" />
     <Compile Include="IrisPlant.cs" />
+    <Compile Include="IrisPlantEnums.cs" />
     <Compile Include="IrisPlantMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

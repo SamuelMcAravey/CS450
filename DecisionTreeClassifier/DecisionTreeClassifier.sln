@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LensesDataset", "..\Utiliti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VotingDataset", "..\Utilities\VotingDataset\VotingDataset.csproj", "{AF2F4F29-E13A-4D9C-A02D-13E1A84A1E7A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessDataset", "..\Utilities\ChessDataset\ChessDataset.csproj", "{960AC63F-4359-4304-AB47-E69D17ED7DA4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Datasets", "Datasets", "{0DA70C76-92EB-40B4-8FE2-C352CA3B8C2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,8 +49,19 @@ Global
 		{AF2F4F29-E13A-4D9C-A02D-13E1A84A1E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF2F4F29-E13A-4D9C-A02D-13E1A84A1E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF2F4F29-E13A-4D9C-A02D-13E1A84A1E7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{960AC63F-4359-4304-AB47-E69D17ED7DA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{960AC63F-4359-4304-AB47-E69D17ED7DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{960AC63F-4359-4304-AB47-E69D17ED7DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{960AC63F-4359-4304-AB47-E69D17ED7DA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8BF00D5E-B931-4789-8767-7BFDD751F576} = {0DA70C76-92EB-40B4-8FE2-C352CA3B8C2E}
+		{1F1F3C3B-5AFE-48B3-88DC-56A585F51EA0} = {0DA70C76-92EB-40B4-8FE2-C352CA3B8C2E}
+		{0D8CFEC2-C38D-4C7B-A4D2-183A51F62C0F} = {0DA70C76-92EB-40B4-8FE2-C352CA3B8C2E}
+		{AF2F4F29-E13A-4D9C-A02D-13E1A84A1E7A} = {0DA70C76-92EB-40B4-8FE2-C352CA3B8C2E}
+		{960AC63F-4359-4304-AB47-E69D17ED7DA4} = {0DA70C76-92EB-40B4-8FE2-C352CA3B8C2E}
 	EndGlobalSection
 EndGlobal
