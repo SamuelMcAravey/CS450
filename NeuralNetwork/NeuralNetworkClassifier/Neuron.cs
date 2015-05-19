@@ -21,7 +21,19 @@ namespace NeuralNetworkClassifier
 
         public IDisposable Subscribe(IObserver<T> observer)
         {
-            return subject.Subscribe(observer);
+            var disposable = subject.Subscribe(observer);
+            lock (gate)
+            {
+                if (!Running)
+                {
+                    Running = true;
+                    subscriptionDisposable = connections.Zip()
+                        .Select(list => list.Sum())
+                        .Select(this.neuronInputConverter.ConvertInput)
+                        .Subscribe(subject.OnNext);
+                }
+            }
+            return disposable;
         }
 
         public void AddConnection(IObservable<double> connection)
@@ -33,29 +45,6 @@ namespace NeuralNetworkClassifier
             }
 
             connections.Add(connection);
-        }
-
-        public void AddConnections(IEnumerable<IObservable<double>> connections)
-        {
-            lock (gate)
-            {
-                if (Running)
-                    return;
-            }
-
-            this.connections.AddRange(connections);
-        }
-
-        public void Run()
-        {
-            lock (gate)
-            {
-                Running = true;
-                subscriptionDisposable = connections.Zip()
-                    .Select(list => list.Sum())
-                    .Select(this.neuronInputConverter.ConvertInput)
-                    .Subscribe(subject.OnNext);
-            }
         }
 
         #region IDisposable Support

@@ -11,10 +11,12 @@ namespace NeuralNetworkClassifier
     {
         static void Main(string[] args)
         {
-            var neuron = new NumericNeuron();
-            neuron.AddConnection(Observable.Return(2.0).AddWeight(-0.25));
-            neuron.Subscribe(Console.WriteLine);
-            neuron.Run();
+            var neuron1 = new NumericNeuron();
+            var neuron1Weight = new MutableWeight(0.25);
+            var neuron2 = new NumericNeuron();
+            neuron1.AddConnection(Observable.Return(2.0).AddWeight(neuron1Weight));
+            neuron2.AddConnection(neuron1.AddWeight(0.25));
+            neuron2.Subscribe(Console.WriteLine);
             Console.ReadLine();
         }
     }

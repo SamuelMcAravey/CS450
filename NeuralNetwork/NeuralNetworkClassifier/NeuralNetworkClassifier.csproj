@@ -59,8 +59,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MutableWeight.cs" />
     <Compile Include="DefaultThresholdConverter.cs" />
     <Compile Include="INeuronInputConverter.cs" />
+    <Compile Include="IWeight.cs" />
+    <Compile Include="NeuronSupervisor.cs" />
     <Compile Include="NumericNeuron.cs" />
     <Compile Include="Neuron.cs" />
     <Compile Include="ObservableEx.cs" />

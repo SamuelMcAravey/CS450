@@ -11,7 +11,15 @@ namespace NeuralNetworkClassifier
     {
         public static IObservable<double> AddWeight(this IObservable<double> source, double weight)
         {
-            return source.Select(value => value*weight);
-        } 
+            return source.AddWeight(() => weight);
+        }
+        public static IObservable<double> AddWeight(this IObservable<double> source, IWeight weight)
+        {
+            return source.AddWeight(weight.GetWeight);
+        }
+        public static IObservable<double> AddWeight(this IObservable<double> source, Func<double> getWeight)
+        {
+            return source.Select(value => value * getWeight());
+        }
     }
 }
