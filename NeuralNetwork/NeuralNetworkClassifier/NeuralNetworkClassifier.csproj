@@ -64,7 +64,6 @@
     <Compile Include="INeuronInputConverter.cs" />
     <Compile Include="IWeight.cs" />
     <Compile Include="NeuronSupervisor.cs" />
-    <Compile Include="NumericNeuron.cs" />
     <Compile Include="Neuron.cs" />
     <Compile Include="ObservableEx.cs" />
     <Compile Include="Perceptron.cs" />
