@@ -10,9 +10,10 @@ namespace NeuralNetworkClassifier
     {
         private readonly List<IObservable<double>> connections = new List<IObservable<double>>();
         private readonly object gate = new object();
-        private readonly Subject<T> subject = new Subject<T>();
+        private readonly BehaviorSubject<T> subject = new BehaviorSubject<T>(default(T));
         private readonly INeuronInputConverter<T> neuronInputConverter;
         public bool Running { get; private set; }
+        public T Value => this.subject.Value;
 
         protected Neuron(INeuronInputConverter<T> neuronInputConverter)
         {
