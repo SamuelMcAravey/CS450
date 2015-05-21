@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Security.Cryptography;
 
 namespace NeuralNetworkClassifier
 {
-    class InputDefinition
+    public sealed class NeuronLayer<TInput>
     {
-         
+        public NeuronLayer(IReadOnlyList<IReadOnlyDictionary<string, MutableWeight>> neuronInputWeights, Func<TInput, List<double>> layerOutput)
+        {
+            NeuronInputWeights = neuronInputWeights;
+            LayerOutput = layerOutput;
+        }
+
+        public IReadOnlyList<IReadOnlyDictionary<string, MutableWeight>> NeuronInputWeights { get; }
+        public Func<TInput, List<double>> LayerOutput { get; }
     }
     public static class Neuron
     {
@@ -24,21 +32,40 @@ namespace NeuralNetworkClassifier
             return CreateNeuron(new DefaultNeuronInputConverter(), inputs);
         }
 
-        public static Func<TInput, List<double>> CreateNeuronLayer<TInput>(int neuronCount, Func<TInput, string, double> propertySelector, List<string> inputNames)
+        public static NeuronLayer<TInput> CreateNumericNeuronLayer<TInput>(int neuronCount, Func<TInput, string, double> propertySelector, IReadOnlyCollection<string> inputNames)
         {
+            Random rand = new Random(DateTime.Now.Millisecond);
+            List<Action<TInput>> inputSetters = new List<Action<TInput>>();
+            List<Func<double>> neurons = new List<Func<double>>();
+            List<IReadOnlyDictionary<string, MutableWeight>> neuronInputWeights = new List<IReadOnlyDictionary<string, MutableWeight>>();
             for (int i = 0; i < neuronCount; i++)
             {
-                Dictionary<string, MutableWeight> propertyValueGetters = new Dictionary<string, MutableWeight>();
-                List<Func<TInput, double>> propertyValues = new List<Func<TInput, double>>();
+                Dictionary<string, MutableWeight> propertyWeights = new Dictionary<string, MutableWeight>();
+                Dictionary<string, double> propertyValues = new Dictionary<string, double>();
+                List<Func<double>> propertyValueGetters = new List<Func<double>>();
                 foreach (var inputName in inputNames)
                 {
-                    var weight = new MutableWeight(0.1);
-                    Func<TInput, double> propertyValue = (TInput input) => propertySelector(input, inputName) * weight.GetWeight();
-                    propertyValueGetters.Add(inputName, weight);
-                    propertyValues.Add(propertyValue);
+                    var weight = new MutableWeight(rand.NextDouble() - 0.5);
+                    Func<double> propertyValueGetter = () => propertyValues[inputName] * weight.GetWeight();
+                    propertyWeights.Add(inputName, weight);
+                    propertyValueGetters.Add(propertyValueGetter);
+
+                    inputSetters.Add(input => propertyValues[inputName] = propertySelector(input, inputName));
                 }
-                CreateNeuron(new DefaultNeuronInputConverter(), propertyValues.ToArray());
+
+                neurons.Add(CreateNumericNeuron(propertyValueGetters.ToArray()));
+                neuronInputWeights.Add(propertyWeights);
             }
+
+            NeuronLayer<TInput> layer = new NeuronLayer<TInput>(neuronInputWeights, input =>
+            {
+                foreach (var inputSetter in inputSetters)
+                {
+                    inputSetter(input);
+                }
+                return neurons.Select(n => n()).ToList();
+            });
+            return layer;
         }
     }
 }

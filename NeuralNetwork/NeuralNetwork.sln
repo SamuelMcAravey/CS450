@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeuralNetworkClassifier", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataSets", "DataSets", "{817A2835-0DED-48E4-ABE3-B2A8CD3410E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "..\Utilities\Utilities\Utilities.csproj", "{20E0ED69-875A-4DEB-924E-516D7D9CE4B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IrisDataset", "..\Utilities\IrisDataset\IrisDataset.csproj", "{8BF00D5E-B931-4789-8767-7BFDD751F576}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,8 +21,19 @@ Global
 		{F5A7F91F-4D13-45BC-BE9B-8253340A1E0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5A7F91F-4D13-45BC-BE9B-8253340A1E0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5A7F91F-4D13-45BC-BE9B-8253340A1E0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20E0ED69-875A-4DEB-924E-516D7D9CE4B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20E0ED69-875A-4DEB-924E-516D7D9CE4B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20E0ED69-875A-4DEB-924E-516D7D9CE4B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20E0ED69-875A-4DEB-924E-516D7D9CE4B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BF00D5E-B931-4789-8767-7BFDD751F576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BF00D5E-B931-4789-8767-7BFDD751F576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BF00D5E-B931-4789-8767-7BFDD751F576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BF00D5E-B931-4789-8767-7BFDD751F576}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8BF00D5E-B931-4789-8767-7BFDD751F576} = {817A2835-0DED-48E4-ABE3-B2A8CD3410E3}
 	EndGlobalSection
 EndGlobal
