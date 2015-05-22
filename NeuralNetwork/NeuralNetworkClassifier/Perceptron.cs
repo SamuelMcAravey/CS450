@@ -10,15 +10,20 @@ namespace NeuralNetworkClassifier
 {
     public sealed class Perceptron<TItem, TClass> : Classifier<TItem, TItem, TClass> where TItem : IClassified<TClass>, IClassifiable
     {
-        private readonly Func<IReadOnlyCollection<double>, TClass> outputConverter;
+        private readonly Func<IReadOnlyList<double>, TClass> outputConverter;
         private readonly Func<TItem, int, double> neuronExpectedOutput;
         private NeuronLayer<TItem> layer;
 
-        public Perceptron(Func<IReadOnlyCollection<double>, TClass> outputConverter, Func<TItem, int, double> neuronExpectedOutput, int neuronCount, Func<TItem, string, double> propertySelector, IReadOnlyCollection<string> inputNames)
+        public Perceptron(
+            Func<IReadOnlyList<double>, TClass> outputConverter, 
+            Func<TItem, int, double> neuronExpectedOutput, 
+            int neuronCount, 
+            Func<TItem, string, double> propertySelector, 
+            IReadOnlyCollection<string> inputNames)
         {
             this.outputConverter = outputConverter;
             this.neuronExpectedOutput = neuronExpectedOutput;
-            this.layer = Neuron.CreateNumericNeuronLayer<TItem>(neuronCount, propertySelector, inputNames);
+            this.layer = Neuron.CreateNumericNeuronLayer(neuronCount, propertySelector, inputNames);
         }
 
         protected override TClass Classify(TItem input)

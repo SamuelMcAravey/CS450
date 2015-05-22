@@ -34,7 +34,12 @@ namespace NeuralNetworkClassifier
             Console.WriteLine("======================================");
             Console.WriteLine("Starting Iris Plant Testing");
             var plants = IrisPlant.ReadPlants();
-            ClassificationTester.Test(plants, new Perceptron<IrisPlant, string>(GetClass, GetIndexedValue, 3, (plant, name) => (double)plant.ValueDictionary[name], new[] { "SepalLength" , "SepalWidth" , "PetalLength" , "PetalWidth" }), testCount: 50, printIndividualResults: true);
+            ClassificationTester.Test(plants, new Perceptron<IrisPlant, IrisPlantClass>(
+                GetClass, 
+                GetIndexedValue, 
+                3, 
+                (plant, name) => (double)plant.ValueDictionary[name], 
+                new[] { "SepalLength" , "SepalWidth" , "PetalLength" , "PetalWidth" }), testCount: 50, printIndividualResults: true);
         }
 
         private static double GetIndexedValue(IrisPlant item, int index)
@@ -42,33 +47,26 @@ namespace NeuralNetworkClassifier
             switch (index)
             {
                 case 0:
-                    return string.Equals(item.Class, "Iris-setosa", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
+                    return item.Class == IrisPlantClass.Setosa ? 1 : 0;
                 case 1:
-                    return string.Equals(item.Class, "Iris-versicolor", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
+                    return item.Class == IrisPlantClass.Versicolor ? 1 : 0;
                 case 2:
-                    return string.Equals(item.Class, "Iris-virginica", StringComparison.OrdinalIgnoreCase) ? 1 : 0;
+                    return item.Class == IrisPlantClass.Virginica ? 1 : 0;
                 default:
                     return 0;
             }
         }
 
-        private static string GetClass(IReadOnlyCollection<double> outputValues)
+        private static IrisPlantClass GetClass(IReadOnlyList<double> outputValues)
         {
-            foreach (var outputValue in outputValues)
-            {
-                switch ((int) outputValue)
-                {
-                    case 0:
-                        return "Iris-setosa";
-                    case 1:
-                        return "Iris-versicolor";
-                    case 2:
-                        return "Iris-virginica";
-                    default:
-                        return "Error classifying";
-                }
-            }
-            return "Error classifying";
+            if (outputValues[0] == 1)
+                return IrisPlantClass.Setosa;
+            if (outputValues[1] == 1)
+                return IrisPlantClass.Versicolor;
+            if (outputValues[2] == 1)
+                return IrisPlantClass.Setosa;
+
+            throw new Exception();
         }
     }
 }

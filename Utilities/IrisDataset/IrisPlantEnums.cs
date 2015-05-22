@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace IrisDataset
 {
-    public enum IrisPlantClasse
+    public enum IrisPlantClass
     {
-
+        Setosa = 1,
+        Versicolor = 2,
+        Virginica = 3
     }
 }

@@ -9,7 +9,7 @@ using Utilities;
 
 namespace IrisDataset
 {
-    public sealed class IrisPlant : IClassifiable, IClassified<string>
+    public sealed class IrisPlant : IClassifiable, IClassified<IrisPlantClass>
     {
 		public static IReadOnlyList<IrisPlant> ReadPlants()
 		{
@@ -49,7 +49,7 @@ namespace IrisDataset
         public double SepalWidth { get; set; }
         public double PetalLength { get; set; }
         public double PetalWidth { get; set; }
-        public string Class { get; set; }
+        public IrisPlantClass Class { get; set; }
 
         public IEnumerable<Tuple<string, object>> Values
         {
