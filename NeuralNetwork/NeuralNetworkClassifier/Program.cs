@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IrisDataset;
 using Utilities;
+using Perceptron;
 
 namespace NeuralNetworkClassifier
 {
@@ -13,6 +14,12 @@ namespace NeuralNetworkClassifier
     {
         static void Main(string[] args)
         {
+            var mlp = MultiLayerPerceptron.CreateMLP(4, new[] { 5, 4, 3 }, Activators.tanhSigmoidNeuronEvaluator);
+            var results = mlp.Evaluate.Invoke(new[] { 1.0, 2.0, 3.0, 4.0 });
+            foreach (var r in results)
+            {
+                Console.WriteLine(r);
+            }
             //var layer = Neuron.CreateNumericNeuronLayer<double>(10, (d, p) => d, new[] {"val"});
             //var output = layer.LayerOutput(5);
             //foreach (var value in output)
@@ -25,7 +32,7 @@ namespace NeuralNetworkClassifier
             //{
             //    Console.WriteLine(value);
             //}
-            TestIrisPlantDataset();
+            //TestIrisPlantDataset();
             Console.ReadLine();
         }
 
@@ -34,7 +41,7 @@ namespace NeuralNetworkClassifier
             Console.WriteLine("======================================");
             Console.WriteLine("Starting Iris Plant Testing");
             var plants = IrisPlant.ReadPlants();
-            ClassificationTester.Test(plants, new Perceptron<IrisPlant, IrisPlantClass>(
+            ClassificationTester.Test(plants, new PerceptronX<IrisPlant, IrisPlantClass>(
                 GetClass, 
                 GetIndexedValue, 
                 3, 

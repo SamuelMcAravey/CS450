@@ -33,6 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FSharp.Core, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -81,6 +82,10 @@
     <ProjectReference Include="..\..\Utilities\Utilities\Utilities.csproj">
       <Project>{20e0ed69-875a-4deb-924e-516d7d9ce4b0}</Project>
       <Name>Utilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Perceptron\Perceptron.fsproj">
+      <Project>{dc9555f2-be92-4a71-943d-d3e43b61cf00}</Project>
+      <Name>Perceptron</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

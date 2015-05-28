@@ -8,13 +8,13 @@ using Utilities;
 
 namespace NeuralNetworkClassifier
 {
-    public sealed class Perceptron<TItem, TClass> : Classifier<TItem, TItem, TClass> where TItem : IClassified<TClass>, IClassifiable
+    public sealed class PerceptronX<TItem, TClass> : Classifier<TItem, TItem, TClass> where TItem : IClassified<TClass>, IClassifiable
     {
         private readonly Func<IReadOnlyList<double>, TClass> outputConverter;
         private readonly Func<TItem, int, double> neuronExpectedOutput;
         private NeuronLayer<TItem> layer;
 
-        public Perceptron(
+        public PerceptronX(
             Func<IReadOnlyList<double>, TClass> outputConverter, 
             Func<TItem, int, double> neuronExpectedOutput, 
             int neuronCount, 
