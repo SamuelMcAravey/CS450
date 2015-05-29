@@ -25,12 +25,8 @@ type Activators() =
     static member tanhSigmoidNeuronEvaluator = Activators.abstractNeuronEvaluator Activators.tanhSigmoidActivator;
 
 type neuronLayer(neuronCount: int, inputCount: int, evaluator: (float[] -> float)) =
-    let mutable currentNeuronCount = neuronCount;
-    do currentNeuronCount <- neuronCount - 1;
-    let mutable currentInputCount = inputCount;
-    do currentInputCount <- inputCount - 1;
-    let rand = System.Random();
-    let neurons = [|for i in 0 .. currentNeuronCount -> {evaluator = evaluator; weights=[|for j in 0 .. currentInputCount -> rand.NextDouble() - 0.5|]} |];
+    let rand = System.Random((int)DateTime.Now.Ticks);
+    let neurons = [|for i in 0 .. neuronCount - 1 -> {evaluator = evaluator; weights=[|for j in 0 .. inputCount -> rand.NextDouble() - 0.5|]} |];
 
     member this.Neurons = neurons;
     member this.EvaluateLayer(inputs: float[]) =
@@ -46,8 +42,8 @@ type public MultiLayerPerceptron(layers: neuronLayer[]) =
     member this.Layers = layers;
     member private this.EvaluateInternal (index: int) (inputs:float[]) =
         match index with
-        | i when i < (this.Layers.Length - 1) -> this.EvaluateInternal (index + 1) (this.Layers.[index].EvaluateLayer(inputs))
-        | _ -> this.Layers.[index].EvaluateLayer(inputs);
+        | i when i < (this.Layers.Length - 1) -> this.EvaluateInternal (index + 1) (this.Layers.[index].EvaluateLayer(Array.append inputs [|-1.0|]))
+        | _ -> this.Layers.[index].EvaluateLayer(Array.append inputs [|-1.0|]);
     member public this.Evaluate = this.EvaluateInternal 0;
     member public this.SetWeight(layerIndex: int, neuronIndex: int, weightIndex: int, value: float) = 
         this.Layers.[layerIndex].SetWeight(neuronIndex, weightIndex, value);
@@ -61,4 +57,3 @@ type public MultiLayerPerceptron(layers: neuronLayer[]) =
 
     static member public CreateMLP(inputCount: int, layerSizes: int[], evaluator: (float[] -> float)) =
         MultiLayerPerceptron(MultiLayerPerceptron.createLayers(inputCount, layerSizes, evaluator, Array.empty));
-

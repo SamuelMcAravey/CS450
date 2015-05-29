@@ -14,12 +14,17 @@ namespace NeuralNetworkClassifier
     {
         static void Main(string[] args)
         {
-            var mlp = MultiLayerPerceptron.CreateMLP(4, new[] { 5, 4, 3 }, Activators.tanhSigmoidNeuronEvaluator);
-            var results = mlp.Evaluate.Invoke(new[] { 1.0, 2.0, 3.0, 4.0 });
-            foreach (var r in results)
-            {
-                Console.WriteLine(r);
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    var mlp = MultiLayerPerceptron.CreateMLP(4, new[] { 5, 4, 3 }, Activators.tanhSigmoidNeuronEvaluator);
+            //    var results = mlp.Evaluate.Invoke(new[] { 1.0, 2.0, 3.0, 4.0 });
+            //    foreach (var r in results)
+            //        Console.WriteLine(r);
+            //    Console.WriteLine(GetClass(results));
+            //    Console.WriteLine();
+            //}
+
+
             //var layer = Neuron.CreateNumericNeuronLayer<double>(10, (d, p) => d, new[] {"val"});
             //var output = layer.LayerOutput(5);
             //foreach (var value in output)
@@ -32,7 +37,7 @@ namespace NeuralNetworkClassifier
             //{
             //    Console.WriteLine(value);
             //}
-            //TestIrisPlantDataset();
+            TestIrisPlantDataset();
             Console.ReadLine();
         }
 
@@ -41,38 +46,22 @@ namespace NeuralNetworkClassifier
             Console.WriteLine("======================================");
             Console.WriteLine("Starting Iris Plant Testing");
             var plants = IrisPlant.ReadPlants();
-            ClassificationTester.Test(plants, new PerceptronX<IrisPlant, IrisPlantClass>(
-                GetClass, 
-                GetIndexedValue, 
-                3, 
-                (plant, name) => (double)plant.ValueDictionary[name], 
-                new[] { "SepalLength" , "SepalWidth" , "PetalLength" , "PetalWidth" }), testCount: 50, printIndividualResults: true);
-        }
-
-        private static double GetIndexedValue(IrisPlant item, int index)
-        {
-            switch (index)
-            {
-                case 0:
-                    return item.Class == IrisPlantClass.Setosa ? 1 : 0;
-                case 1:
-                    return item.Class == IrisPlantClass.Versicolor ? 1 : 0;
-                case 2:
-                    return item.Class == IrisPlantClass.Virginica ? 1 : 0;
-                default:
-                    return 0;
-            }
+            ClassificationTester.Test(plants, new PerceptronClassifier<IrisPlant, IrisPlantClass>(GetClass, 4, new[] { 5, 4, 3 }));
         }
 
         private static IrisPlantClass GetClass(IReadOnlyList<double> outputValues)
         {
-            if (outputValues[0] == 1)
-                return IrisPlantClass.Setosa;
-            if (outputValues[1] == 1)
-                return IrisPlantClass.Versicolor;
-            if (outputValues[2] == 1)
-                return IrisPlantClass.Setosa;
-
+            var max = outputValues.Select((r, idx) => Tuple.Create(idx, r)).OrderBy(t => t.Item2).First();
+            
+            switch (max.Item1)
+            {
+                case 0:
+                    return IrisPlantClass.Setosa;
+                case 1:
+                    return IrisPlantClass.Versicolor;
+                case 2:
+                    return IrisPlantClass.Virginica;
+            }
             throw new Exception();
         }
     }

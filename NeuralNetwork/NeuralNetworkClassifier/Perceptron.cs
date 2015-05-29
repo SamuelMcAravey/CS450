@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Perceptron;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Subjects;
@@ -8,45 +9,28 @@ using Utilities;
 
 namespace NeuralNetworkClassifier
 {
-    public sealed class PerceptronX<TItem, TClass> : Classifier<TItem, TItem, TClass> where TItem : IClassified<TClass>, IClassifiable
+    public sealed class PerceptronClassifier<TItem, TClass> : Classifier<TItem, TItem, TClass> where TItem : IClassified<TClass>, IClassifiable
     {
         private readonly Func<IReadOnlyList<double>, TClass> outputConverter;
         private readonly Func<TItem, int, double> neuronExpectedOutput;
         private NeuronLayer<TItem> layer;
+        private MultiLayerPerceptron mlp;
 
-        public PerceptronX(
-            Func<IReadOnlyList<double>, TClass> outputConverter, 
-            Func<TItem, int, double> neuronExpectedOutput, 
-            int neuronCount, 
-            Func<TItem, string, double> propertySelector, 
-            IReadOnlyCollection<string> inputNames)
+        public PerceptronClassifier(Func<IReadOnlyList<double>, TClass> outputConverter, int inputCount, int[] layerSizes)
         {
             this.outputConverter = outputConverter;
-            this.neuronExpectedOutput = neuronExpectedOutput;
-            this.layer = Neuron.CreateNumericNeuronLayer(neuronCount, propertySelector, inputNames);
+            this.mlp = MultiLayerPerceptron.CreateMLP(inputCount, layerSizes, Activators.tanhSigmoidNeuronEvaluator);
         }
 
         protected override TClass Classify(TItem input)
         {
-            var output = this.layer.LayerOutput(input);
+            var output = this.mlp.Evaluate.Invoke(input.ValueDictionary.Values.Cast<double>().ToArray());
             return this.outputConverter(output);
         }
 
         public override void Train(IClassifiedDataset<TItem, TClass> trainingDataset)
         {
-            foreach (var item in trainingDataset)
-            {
-                var output = layer.LayerOutput(item);
-                for (int i = 0; i < output.Count; i++)
-                {
-                    var expected = neuronExpectedOutput(item, i);
-                    var weights = layer.NeuronInputWeights[i];
-                    foreach (var weight in weights)
-                    {
-                        weight.Value.SetWeight(weight.Value.GetWeight() - 0.2*(output[i] - expected)*(double) item.ValueDictionary[weight.Key]);
-                    }
-                }
-            }
+            return;
         }
     }
 }
