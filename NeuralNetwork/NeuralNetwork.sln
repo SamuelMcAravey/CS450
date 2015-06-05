@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IrisDataset", "..\Utilities
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Perceptron", "Perceptron\Perceptron.fsproj", "{DC9555F2-BE92-4A71-943D-D3E43B61CF00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerceptronCSharp", "PerceptronCSharp\PerceptronCSharp.csproj", "{4AFE1F5A-D845-4D22-9737-4905943E33D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{DC9555F2-BE92-4A71-943D-D3E43B61CF00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC9555F2-BE92-4A71-943D-D3E43B61CF00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC9555F2-BE92-4A71-943D-D3E43B61CF00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AFE1F5A-D845-4D22-9737-4905943E33D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AFE1F5A-D845-4D22-9737-4905943E33D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AFE1F5A-D845-4D22-9737-4905943E33D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AFE1F5A-D845-4D22-9737-4905943E33D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
