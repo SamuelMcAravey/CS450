@@ -21,7 +21,7 @@ namespace PerceptronCSharp
             return activator(inputs.Sum());
         }
 
-        private static double eSigmoidActivator(double total)
+        public static double eSigmoidActivator(double total)
         {
             return (double) (1/(1.0 + Math.Pow(Constants.E, -total)));
         }

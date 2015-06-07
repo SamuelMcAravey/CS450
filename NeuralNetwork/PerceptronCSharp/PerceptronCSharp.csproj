@@ -50,8 +50,8 @@
     <Compile Include="Layer.cs" />
     <Compile Include="MLP.cs" />
     <Compile Include="MultiLayerPerceptron.cs" />
+    <Compile Include="Neuron.cs" />
     <Compile Include="NeuronLayer.cs" />
-    <Compile Include="Perceptron.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

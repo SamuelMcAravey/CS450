@@ -49,12 +49,12 @@ namespace NeuralNetworkClassifier
             Console.WriteLine("======================================");
             Console.WriteLine("Starting Iris Plant Testing");
             var plants = IrisPlant.ReadPlants();
-            ClassificationTester.Test(plants, new PerceptronClassifier<IrisPlant, IrisPlantClass>(GetClass, 4, new[] { 5, 4, 3 }, ClassToExpectedOutputConverter));
+            ClassificationTester.Test(plants, new PerceptronClassifier<IrisPlant, IrisPlantClass>(GetClass, 4, new[] { 5,3 }, ClassToExpectedOutputConverter), testCount: 1);
         }
 
         private static IrisPlantClass GetClass(IReadOnlyList<double> outputValues)
         {
-            var max = outputValues.Select((r, idx) => Tuple.Create(idx, r)).OrderBy(t => t.Item2).First();
+            var max = outputValues.Select((r, idx) => Tuple.Create(idx, r)).OrderByDescending(t => t.Item2).First();
 
             switch (max.Item1)
             {

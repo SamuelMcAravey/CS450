@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -61,7 +62,6 @@ namespace PerceptronCSharp
         public void UpdateWeights(IEnumerable<double> expectedOutput)
         {
             var lastLayerIndex = this.NeuronOutputs.Count - 1;
-            var previousLayerWeights = this.NeuronWeights[lastLayerIndex - 1];
             for (int layerIndex = lastLayerIndex; layerIndex >= 0; layerIndex--)
             {
                 if (layerIndex < lastLayerIndex)
@@ -76,16 +76,16 @@ namespace PerceptronCSharp
                 }
             }
 
-            for (int layerIndex = 0; layerIndex < this.NeuronOutputs.Count; layerIndex++)
+            for (int layerIndex = 0; layerIndex <= lastLayerIndex; layerIndex++)
             {
                 var error = this.NeuronErrors[layerIndex];
                 var previousLayerOutputs = layerIndex == 0 ? this.mlpInputs : this.NeuronOutputs[layerIndex - 1];
+                var previousLayerWeights = this.NeuronWeights[layerIndex];
                 for (int i = 0; i < previousLayerWeights.Count; i++)
                 {
-                    double previousOutput = previousLayerOutputs[0];
-                    for (int j = 0; j < error.Count; j++)
+                    for (int j = 0; j < previousLayerOutputs.Count; j++)
                     {
-                        previousLayerWeights[i][j] = previousLayerWeights[i][j] - 0.2 * error[j] * previousOutput;
+                        previousLayerWeights[i][j] = previousLayerWeights[i][j] - 0.05*error[i]*previousLayerOutputs[j];
                     }
                 }
             }
@@ -131,39 +131,45 @@ namespace PerceptronCSharp
             var sb = new StringBuilder();
 
             sb.AppendLine("digraph { ");
+            sb.AppendLine("rankdir=LR;");
+            sb.AppendLine("nodesep=1;");
+            sb.AppendLine("ranksep=3;");
+            sb.AppendLine("splines=line;");
+            
+            sb.Append("{ rank=same; ");
+            foreach (var mlpInput in mlpInputs)
+                sb.Append(string.Format("\"{0}\" ", mlpInput));
+            sb.AppendLine("; }");
 
             for (int layerIndex = 0; layerIndex < this.NeuronOutputs.Count; layerIndex++)
             {
+                sb.Append("{ rank=same; ");
+                //sb.AppendLine(string.Format("subgraph cluster{0} {{", layerIndex+1));
                 var fromLayer = layerIndex == 0 ? mlpInputs : this.NeuronOutputs[layerIndex - 1];
                 var toLayer = this.NeuronOutputs[layerIndex];
-                var pairs = from fromNeuron in fromLayer
-                    from toNeuron in toLayer
-                    select new {From = fromNeuron, To = toNeuron};
-                foreach (var pair in pairs)
+                var weights = this.NeuronWeights[layerIndex];
+
+                List<Tuple<double, double, double>> values = new List<Tuple<double, double, double>>();
+                for (int fromIndex = 0; fromIndex < fromLayer.Count; fromIndex++)
                 {
-                    sb.AppendLine(string.Format("{0} -> {1}", pair.From, pair.To));
+                    for (int toIndex = 0; toIndex < toLayer.Count; toIndex++)
+                    {
+                        sb.Append(string.Format("\"{0}\" ", toLayer[toIndex]));
+                        values.Add(Tuple.Create(fromLayer[fromIndex], toLayer[toIndex], weights[toIndex][fromIndex]));
+                    }
                 }
-                //for (int neuronIndex = 0; neuronIndex < this.NeuronOutputs[neuronIndex].Count; neuronIndex++)
-                //{
-                //    var fromOutput = layerIndex == 0 ? mlpInputs[neuronIndex];
-                //    sb.AppendLine(string.Format("{0}->{1}"))
-                //}
+
+                sb.AppendLine("; }");
+
+                foreach (var value in values)
+                {
+                    sb.AppendLine(string.Format("\"{0}\" -> \"{1}\" [label=\"{2}\" color=\"grey\" decorate=true];", value.Item1, value.Item2, value.Item3));
+                }
             }
 
             sb.AppendLine("}");
 
             return sb.ToString();
         }
-
-        //private double CalculateHiddenError(int currentLayerIndex, int neuronIndex)
-        //{
-        //    var currentOutputs = this.NeuronOutputs[currentLayerIndex];
-        //    var currentOutput = currentOutputs[neuronIndex];
-        //    var nextLayerWeights = this.NeuronWeights[currentLayerIndex + 1];
-        //    var nextLayerErrors = this.NeuronErrors[currentLayerIndex + 1];
-        //    var neuronSums = nextLayerErrors.Select((t, j) => nextLayerWeights[j].Zip(nextLayerErrors, (weight, error) => weight*error).Sum()).ToList();
-        //    var neuronError = currentOutput*(1 - currentOutput)*neuronSums[neuronIndex];
-        //    return neuronError;
-        //}
     }
 }

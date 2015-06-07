@@ -1,0 +1,1 @@
+forfiles /S /m *.dot /c "cmd.exe /c C:\Develop\Graphviz2.38\bin\dot.exe @file -T png -o @fname.png"

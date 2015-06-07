@@ -8,12 +8,12 @@ namespace PerceptronCSharp
 {
     public class NeuronLayer
     {
-        public List<Neuron> Neurons { get; set; }
+        public List<NeuronX> Neurons { get; set; }
         public double[][] Weights { get; set; }
         public List<double> Outputs { get; set; }
         public NeuronLayer(int neuronCount, int inputCount, Func<IEnumerable<double>, double> evaluator)
         {
-            this.Neurons = new List<Neuron>();
+            this.Neurons = new List<NeuronX>();
             this.Outputs = new List<double>();
             this.Weights = new double[neuronCount][];
 
@@ -21,7 +21,7 @@ namespace PerceptronCSharp
             for (int i = 0; i < neuronCount; i++)
             {
                 this.Weights[i] = new double[inputCount];
-                this.Neurons.Add(new Neuron
+                this.Neurons.Add(new NeuronX
                 {
                     Evaluator = evaluator
                 });
@@ -56,7 +56,7 @@ type neuronLayer(neuronCount: int, inputCount: int, evaluator: (double[] -> doub
     member this.SetWeight(neuronIndex: int, weightIndex: int, value: double) = this.Neurons.[neuronIndex].weights.[weightIndex] <- value;*/
     }
 
-    public class Neuron
+    public class NeuronX
     {
         public Func<IEnumerable<double>, double> Evaluator { get; set; }
     }
